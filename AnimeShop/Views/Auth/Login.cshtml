@@ -1,0 +1,35 @@
+﻿@model AnimeShop.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<form asp-action="Login" method="post" class="p-4 shadow rounded bg-light" style="max-width: 400px; margin: auto;">
+    <h2 class="text-center mb-4">Login</h2>
+    <div class="form-group mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input 
+            type="email" 
+            class="form-control" 
+            id="Email" 
+            name="Email" 
+            placeholder="Enter your email" 
+            required 
+        />
+    </div>
+    <div class="form-group mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="Password" 
+            name="Password" 
+            placeholder="Enter your password" 
+            required 
+        />
+    </div>
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </div>
+</form>
+
+

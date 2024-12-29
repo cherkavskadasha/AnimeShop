@@ -1,0 +1,28 @@
+﻿@model Customer
+
+<h4>Редагування інформації</h4>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group">
+                <label for="email" class="control-label">Email</label>
+                <input type="email" id="email" name="Email" class="form-control" value="@Model.Email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" class="control-label">Пароль</label>
+                <input type="text" id="phone" name="Phone" class="form-control" value="@Model.Phone" required />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Зберегти" class="btn btn-primary mt-3" />
+                <a asp-action="Dashboard" class="btn btn-secondary ml-2 mt-3">Назад</a>
+            </div>
+        </form>
+    </div>
+</div>

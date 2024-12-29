@@ -1,0 +1,109 @@
+﻿@model IEnumerable<AnimeShop.Models.Wishlist>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Wishlist</h1>
+
+<div class="wishlist-grid">
+    @foreach (var item in Model)
+    {
+            <div class="product-card">
+                <a asp-action="Details" asp-route-id="@item.Product.ProductId" class="product-card-link">
+                    <h2 class="product-name">@Html.DisplayFor(modelItem => item.Product.Name)</h2>
+                    <img src="@item.Product.Image" alt="@item.Product.Name" class="product-image" />
+                    <p class="product-price">
+                        <span class="current-price">@Html.DisplayFor(modelItem => item.Product.Price) грн</span>
+                    </p>
+                </a>
+                     <div class="d-flex align-items-center justify-content-center">
+                        <form asp-action="AddToCart" asp-controller="Cart" method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <div class="input-group">
+
+                                <button type="submit" class="btn btn-success">Купити</button>
+                                    <input type="number" name="quantity" value="1" min="1" class="form-control" style="width: 50px;" />
+                            </div>
+                        </form>
+
+                        <form asp-action="ToggleWishlistFromWishlist" asp-controller="Wishlists" method="post" style="display:inline;">
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <button type="submit" class="add-to-wishlist">
+                            <i class="fa fa-heart text-danger"></i>
+                        </button>
+                        </form>
+                   </div>
+               
+            </div>
+    }
+</div>
+
+<style>
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .wishlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .product-card-link {
+        text-decoration: none;
+    }
+
+    .product-card {
+        border: 3px solid #3D3D3D;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    .product-name {
+        font-size: 1.5em;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    .current-price {
+        color: #e60023;
+        font-weight: bold;
+    }
+
+    .product-image {
+        height: 250px;
+        margin: 10px 0;
+        border-radius: 1em;
+    }
+
+    .wishlist-actions {
+        margin-top: 10px;
+    }
+
+        .wishlist-actions a {
+            margin-right: 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .wishlist-actions a:hover {
+            text-decoration: underline;
+        }
+</style>
+

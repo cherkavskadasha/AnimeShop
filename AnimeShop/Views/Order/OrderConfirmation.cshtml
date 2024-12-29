@@ -1,0 +1,33 @@
+﻿@model AnimeShop.Models.Order
+
+<h2>Замовлення підтверджено</h2>
+
+<p>Ваше замовлення з номером: @Model.OrdersId підтверджено.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>Кількість</th>
+            <th>Ціна за одиницю</th>
+            <th>Загальна ціна</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.PricePerUnit</td>
+                    <td>@(item.Quantity * item.PricePerUnit)</td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+<p>Загальна сума: @Model.TotalAmount</p>
+
+<p>Дякуємо за ваші покупки! Ми відправимо вам підтвердження на електронну пошту: <strong>@User.Identity.Name</strong>.</p>
+
+<a href="@Url.Action("Index", "Products")" class="btn btn-primary">Повернутися на головну сторінку</a>

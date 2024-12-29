@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AnimeShop.Models.OrderItem>
+
+<h2>Ваш кошик</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>Кількість</th>
+            <th>Ціна за одиницю</th>
+            <th>Загальна ціна</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Price</td>
+                    <td>@(item.Quantity * item.PricePerUnit)</td>
+                    <td>
+                        <a asp-action="RemoveFromCart" asp-route-orderItemId="@item.OrderItemId" class="btn btn-danger">Видалити</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+<div class="text-end">
+    <h5>Загальна сума: 
+        @Model.Sum(item => item.Quantity * item.PricePerUnit) грн
+    </h5>
+</div>
+<a href="@Url.Action("CreateOrder", "Order")" class="btn btn-primary">Оформити замовлення</a>

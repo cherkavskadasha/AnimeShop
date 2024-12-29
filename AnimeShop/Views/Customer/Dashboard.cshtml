@@ -1,0 +1,115 @@
+﻿@model AnimeShop.Models.Customer
+
+@{
+    ViewData["Title"] = "Кабінет користувача";
+}
+
+<style>
+    .card-text {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .toggle-info {
+        cursor: pointer;
+        color: #007bff;
+        text-decoration: underline;
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        margin-left: 5px;
+    }
+
+    .hidden-info {
+        display: none;
+        color: #000;
+    }
+</style>
+
+<h2 class="text-center">Кабінет користувача</h2>
+
+<div class="customer-info">
+    <h3 class="text-center">Ласкаво просимо, @Model.FirstName @Model.LastName</h3>
+    <h3>Інформація про користувача</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>
+                Email: @Model.Email 
+            </p>
+            <p>
+                Пароль: @Model.Phone 
+            </p>
+            <a class="btn btn-primary" asp-area="" asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.CustomerId">Змінити</a>
+        </div>
+    </div>
+</div>
+
+<h3>Інформація про адресу</h3>
+    @if (Model.Address != null)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <p>Вулиця: @Model.Address.Street</p>
+                <p>Поштовий індекс: @Model.Address.ZipCode</p>
+                <a class="btn btn-primary" asp-area="" asp-controller="Addresses" asp-action="Edit" asp-route-id="@Model.AddressId">Змінити</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Адреса: Недоступно</p>
+    }
+
+<h3>Інформація про оплату</h3>
+@if (Model.Payment != null)
+{
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Деталі оплати</h5>
+                <p class="card-text">
+                    Номер картки: <span class="hidden-info"> @Model.Payment.CardNumber</span>
+                    <button class="toggle-info">Показати</button>
+                </p>
+                <p class="card-text">
+                    CVV: <span class="hidden-info"> @Model.Payment.Cvv</span>
+                    <button class="toggle-info">Показати</button>
+                </p>
+                <p class="card-text">Ім'я: @Model.Payment.Name</p>
+                <p class="card-text">Термін дії: @Model.Payment.Month / @Model.Payment.Year</p>
+                <a class="btn btn-primary" asp-area="" asp-controller="Payments" asp-action="Edit" asp-route-id="@Model.PaymentId">Змінити</a>
+            </div>
+                
+        </div>
+}
+else
+{
+        <p>Інформація про оплату відсутня.</p>
+}
+
+<a href="@Url.Action("Index", "Wishlists")" class="btn btn-primary">Бажання</a>
+<a href="@Url.Action("Index", "Cart")" class="btn btn-info">Переглянути корзину</a>
+<a href="@Url.Action("OrderHistory", "Order")" class="btn btn-warning">Переглянути замовлення</a>
+
+<form asp-action="Logout" asp-controller="Auth" method="post" style="display:inline;">
+    <button type="submit" class="btn btn-secondary">Вихід</button>
+</form>
+
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.toggle-info').forEach(function (el) {
+            el.addEventListener('click', function () {
+                var hiddenInfo = this.previousElementSibling;
+                if (hiddenInfo.style.display === 'none') {
+                    hiddenInfo.style.display = 'block';
+                    this.textContent = 'Сховати'; 
+                } else {
+                    hiddenInfo.style.display = 'none';
+                    this.textContent = 'Показати'; 
+                }
+            });
+        });
+    });
+</script>

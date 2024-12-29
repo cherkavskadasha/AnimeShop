@@ -1,0 +1,161 @@
+﻿@model AnimeShop.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Деталі продукту</h1>
+
+<div class="product-details-container">
+    <div class="product-details-image">
+        <img src="@Model.Image" alt="@Model.Name" class="product-image-preview" />
+    </div>
+    <div class="product-details-info">
+        <h2 class="product-name">@Model.Name</h2>
+        <p class="product-description">@Model.Description</p>
+        <p class="product-price">Ціна: <strong>@Model.Price грн</strong></p>
+        <p class="product-stock">На складі: <strong>@Model.Stock</strong></p>
+        <p class="product-category">Категорія: <strong>@Model.Category.CategoryName</strong></p>
+        <h3>Рейтинг: @Model.GetStarRating(ViewData["AverageRating"])</h3>
+        <div class="product-actions">
+            @if (Context.Request.Cookies["CustomerId"] == "0")
+            {
+                    <a asp-action="Edit" asp-route-id="@Model?.ProductId" class="btn btn-primary">Редагувати</a>
+                    <a asp-action="Delete" asp-route-id="@Model?.ProductId" class="btn btn-primary btn-danger">Видалити</a>
+            }
+
+            <a asp-action="Index" class="btn btn-secondary">Назад до списку</a>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<h3>Додати відгук</h3>
+
+@if (Context.Request.Cookies["CustomerId"] == null)
+{
+        <p>Ви повинні увійти в систему, щоб залишити відгук.</p>
+        <a class="btn btn-secondary" asp-area="" asp-controller="Auth" asp-action="Login">Увійти</a>
+}
+else
+{
+        <form method="post" asp-action="Details">
+            <input type="hidden" name="ProductId" value="@Model.ProductId" />
+            <input type="hidden" name="CustomerId" value="@Context.Request.Cookies["CustomerId"]" />
+
+            <div class="form-group">
+                <label for="Rating">Оцінка:</label>
+                <select name="Rating" id="Rating" class="form-control" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ReviewText">Відгук:</label>
+                <textarea name="ReviewText" id="ReviewText" class="form-control" rows="4" required></textarea>
+            </div>
+                <button type="submit" class="btn btn-primary mt-3">Залишити відгук</button>
+        </form>
+}
+
+<hr />
+
+<h3>Відгуки:</h3>
+<ul class="product-reviews">
+    @foreach (var review in Model.Reviews)
+    {
+            <li>
+                <p><strong>@review.Customer.FirstName @review.Customer.LastName</strong> (@review.ReviewDate):</p>
+                <p>@review.ReviewText</p>
+                <p>Оцінка: @review.Rating</p>
+            @if (Context.Request.Cookies["CustomerId"] == "0")
+            {
+            <a asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.ReviewId" class="btn btn-primary btn-danger">Видалити</a>
+            }
+            </li>
+
+    }
+</ul>
+
+<style>
+    .product-details-container {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+        align-items: flex-start;
+    }
+
+    .product-details-image {
+        flex: 1;
+        text-align: center;
+    }
+
+    .product-image-preview {
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-details-info {
+        flex: 2;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-name {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+
+    .product-description {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+
+    .product-price, .product-stock, .product-category {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+
+    .product-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .product-reviews {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .product-reviews li {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .product-reviews p {
+        margin: 5px 0;
+    }
+
+    .product-reviews p strong {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .review-rating {
+        color: #f39c12;
+        font-weight: bold;
+    }
+</style>
+
+

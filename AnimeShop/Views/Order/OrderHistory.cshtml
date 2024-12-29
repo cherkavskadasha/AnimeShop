@@ -1,0 +1,45 @@
+﻿@model IEnumerable<AnimeShop.Models.Order>
+
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<h2>Order History</h2>
+
+@if (Model == null || !Model.Any())
+{
+        <p>No orders found.</p>
+}
+else
+{
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var order in Model)
+            {
+                        <tr>
+                            <td>@order.OrdersId</td>
+                            <td>@order.OrderDate</td>
+                            <td>@order.TotalAmount</td>
+                            <td>@order.Status</td>
+                            <td>
+                                <ul>
+                            @foreach (var item in order.OrderItems)
+                            {
+                                            <li>@item.Product.Name - @item.Quantity x @item.PricePerUnit</li>
+                            }
+                                </ul>
+                            </td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
