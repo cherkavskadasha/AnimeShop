@@ -53,10 +53,11 @@ namespace AnimeShop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,CardNumber,Cvv,Name,Month,Year")] Payment payment)
+        public async Task<IActionResult> Create([Bind("PaymentId,CardNumber,Cvv,Name,Month,Year")] Payment payment, int id)
         {
             if (ModelState.IsValid)
             {
+                payment.PaymentId = id;
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
