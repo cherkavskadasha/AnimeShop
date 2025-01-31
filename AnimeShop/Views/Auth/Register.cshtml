@@ -1,0 +1,61 @@
+﻿<form asp-action="Register" method="post" class="p-4 shadow rounded bg-light" style="max-width: 400px; margin: auto;">
+    <h2 class="text-center mb-4">Реєстрація</h2>
+    <div class="form-group mb-3">
+        <label for="Email" class="form-label">Електронна пошта</label>
+        <input 
+            type="email" 
+            class="form-control" 
+            id="Email" 
+            name="Email" 
+            placeholder="Введіть вашу електронну пошту" 
+            required 
+        />
+    </div>
+    <div class="form-group mb-3">
+        <label for="Phone" class="form-label">Пароль</label>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="Phone" 
+            name="Password" 
+            placeholder="Введіть ваш пароль" 
+            required 
+        />
+    </div>
+    <div class="form-group mb-3">
+        <label for="ConfirmPassword" class="form-label">Підтвердьте пароль</label>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="ConfirmPassword" 
+            name="ConfirmPassword" 
+            placeholder="Підтвердьте ваш пароль" 
+            required 
+        />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group mb-3">
+        <label for="FirstName" class="form-label">Ім'я</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="FirstName" 
+            name="FirstName" 
+            placeholder="Введіть ваше ім'я" 
+        />
+    </div>
+    <div class="form-group mb-3">
+        <label for="LastName" class="form-label">Прізвище</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="LastName" 
+            name="LastName" 
+            placeholder="Введіть ваше прізвище" 
+        />
+    </div>
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-block">Зареєструватися</button>
+    </div>
+</form>
+

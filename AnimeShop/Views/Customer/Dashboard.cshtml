@@ -52,8 +52,8 @@
     {
         <div class="card mb-3">
             <div class="card-body">
-                <p>Вулиця: @Model.Address.Street</p>
-                <p>Поштовий індекс: @Model.Address.ZipCode</p>
+                        <p>Вулиця: @(Model.Address.Street != null ? Model.Address.Street : "Вулиця не вказана")</p>
+                            <p>Поштовий індекс: @(Model.Address.ZipCode != null ? Model.Address.ZipCode : "Індекс не вказан")</p>
                 <a class="btn btn-primary" asp-area="" asp-controller="Addresses" asp-action="Edit" asp-route-id="@Model.AddressId">Змінити</a>
             </div>
         </div>
@@ -70,15 +70,15 @@
             <div class="card-body">
                 <h5 class="card-title">Деталі оплати</h5>
                 <p class="card-text">
-                    Номер картки: <span class="hidden-info"> @Model.Payment.CardNumber</span>
+                                Номер картки: <span class="hidden-info"> @(Model.Payment.CardNumber != null ? Model.Payment.CardNumber : "Номер карти не вказан")</span>
                     <button class="toggle-info">Показати</button>
                 </p>
                 <p class="card-text">
-                    CVV: <span class="hidden-info"> @Model.Payment.Cvv</span>
+                                CVV: <span class="hidden-info"> @(Model.Payment.Cvv != null ? Model.Payment.Cvv : "Cvv не вказан")</span>
                     <button class="toggle-info">Показати</button>
                 </p>
-                <p class="card-text">Ім'я: @Model.Payment.Name</p>
-                <p class="card-text">Термін дії: @Model.Payment.Month / @Model.Payment.Year</p>
+                            <p class="card-text">Ім'я: @(Model.Payment.Name != null ? Model.Payment.Name : "Ім'я не вказан")</p>
+                                        <p class="card-text">Термін дії: @(Model.Payment.Month != null ? Model.Payment.Month : "Міясць не вказан") / @(Model.Payment.Year != null ? Model.Payment.Year : "Рік не вказан")</p>
                 <a class="btn btn-primary" asp-area="" asp-controller="Payments" asp-action="Edit" asp-route-id="@Model.PaymentId">Змінити</a>
             </div>
                 
@@ -87,6 +87,7 @@
 else
 {
         <p>Інформація про оплату відсутня.</p>
+
 }
 
 <a href="@Url.Action("Index", "Wishlists")" class="btn btn-primary">Бажання</a>

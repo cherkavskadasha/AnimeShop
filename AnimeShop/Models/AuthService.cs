@@ -13,7 +13,6 @@ namespace AnimeShop.Models
 
         public Customer ValidateUserByEmailAndPassword(string email, string password)
         {
-            // Пошук користувача з email та перевірка пароля (Phone)
             return _context.Customers.SingleOrDefault(u => u.Email == email && u.Phone == password);
         }
     }

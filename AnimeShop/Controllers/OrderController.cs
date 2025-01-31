@@ -14,7 +14,6 @@ namespace AnimeShop.Controllers
             _context = context;
         }
 
-        // Створення замовлення
         public IActionResult CreateOrder()
         {
             var userId = int.Parse(Request.Cookies["CustomerId"]);
